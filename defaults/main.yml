@@ -1,0 +1,15 @@
+---
+# task variables
+pihole_remi_repo: "http://rpms.remirepo.net/enterprise/remi-release-7.rpm"
+pihole_repo_depth: 1
+pihole_user: pihole
+pihole_group: pihole
+pihole_directory: "/home/{{ pihole_user }}/pihole"
+pihole_branch: "master"
+pihole_etc_dir: /etc/pihole/
+pihole_bin_path: /usr/local/bin/pihole
+pihole_update: true
+pihole_reinstall: false
+
+# setupVars variables
+pihole_web_password: "37af3556919586d1da10c1b50b44251f82ec8ef6be27b2007b6f7111989786fa"

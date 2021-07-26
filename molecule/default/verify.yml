@@ -1,0 +1,20 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  gather_facts: false
+  vars:
+    expected_content: "Did you mean to go to the admin panel?"
+  tasks:
+  - name: get index.html
+    uri:
+      url: http://localhost
+      return_content: yes
+    register: this
+    failed_when: "expected_content not in this.content"
+
+  - name: ensure content type is text/html
+    assert:
+      that:
+      - "'text/html' in this.content_type"

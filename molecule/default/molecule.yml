@@ -1,0 +1,47 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: vagrant
+  provider:
+    name: virtualbox
+platforms:
+  - name: instance
+    box: geerlingguy/centos7
+    memory: 1024
+    cpus: 1
+    interfaces:
+      - auto_config: true
+        network_name: private_network
+        type: static
+        ip: 192.168.50.100
+    provider_raw_config_args:
+      - "customize [ 'modifyvm', :id, '--natdnshostresolver1', 'on' ]"
+    config_options:
+      ssh.keep_alive: yes
+      ssh.remote_user: "'vagrant'"
+provisioner:
+  name: ansible
+  inventory:
+    host_vars:
+      # Inventory used for Molecule when executing the Ansible role tested.     
+      instance:
+        variable1: value
+        variable2: False
+lint: |
+  set -e
+  yamllint .
+scenario:
+  test_sequence:
+    - lint
+    - cleanup
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    - verify
+    - cleanup
+    - destroy
+verifier:
+  name: ansible
