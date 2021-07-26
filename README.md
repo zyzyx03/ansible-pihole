@@ -1,38 +1,30 @@
-Role Name
-=========
+# pihole raspberry pi ansible role
 
-A brief description of the role goes here.
+Role installs and configures Pihole https://pi-hole.net/ with unattentded setup
 
-Requirements
-------------
+Documents relating to pi-hole are at https://docs.pi-hole.net/
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+## Requirements
+User with sudo access to the machine.
 
-Role Variables
---------------
+other [prerequisites](https://docs.pi-hole.net/main/prerequisites/)
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+### Required Variables
+#### pihole_web_password:
+You will need to generate a admin password for the `pihole_web_password:` variable, password is hashed with sha256 twice. You can generate a password with the following shell command.
 
-Dependencies
-------------
+With the password in a file (recommended).
+```shell
+echo -n $(cat ~/piholepass.word) | sha256sum | awk '{printf "%s", $1}' | sha256sum
+```
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+With the password in shell command (not recommended)
+```shell
+echo -n notsosecretpassword | sha256sum | awk '{printf "%s", $1}' | sha256sum
+```
 
-Example Playbook
-----------------
+recommended to store this variable in ansible vault.
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
-
-License
--------
-
-BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+## Role Variables
+[defaults/main.yml](defaults/main.yml) for default values
