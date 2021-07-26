@@ -1,4 +1,4 @@
-# pihole raspberry pi ansible role
+# pihole Ansible role.
 
 Role installs and configures Pihole https://pi-hole.net/ with unattentded setup
 
